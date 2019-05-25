@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Exercício 02</title>
+    </head>
+    <body>
+        <input type="text" name="user">
+        <button>Adicionar</button>
+
+        <ul></ul>
+
+        <script type="text/javascript">
+            var button = document.querySelector('button');
+
+            button.onclick = function (){
+                var user = document.querySelector('[name=user]').value;
+                
+                buscar(user)
+                    .then(function(repos){
+                        repos.forEach(function(repo){
+                            var ul = document.querySelector('ul');
+                            var li = document.createElement('li');
+                            li.appendChild(document.createTextNode(repo.name));
+                            ul.appendChild(li);
+                        });
+                    })
+                    .catch(function(error){
+                        alert(error);
+                    });
+            }
+            
+            function buscar(user){
+                return new Promise(function(resolve, reject){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'https://api.github.com/users/' + user + '/repos');
+                    xhr.send(null);
+                    xhr.onreadystatechange = function(){
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                resolve(JSON.parse(xhr.responseText));
+                            } else {
+                                reject('Usuário inexistente');
+                            }
+                        }
+                    }
+                }); 
+            }
+        </script>
+    </body>
+</html>
