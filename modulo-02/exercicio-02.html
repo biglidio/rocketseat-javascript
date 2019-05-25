@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Exercício 02</title>
+    </head>
+    <body>
+        <button>Adicionar quadrado</button>
+
+        <script type="text/javascript">
+            var button = document.querySelector('button');
+            
+            button.onclick = function(){    
+                var square = document.createElement('div');
+                square.style.backgroundColor = '#f00';
+                square.style.width = '100px';
+                square.style.height = '100px';
+
+                square.onmouseover = function() {
+                    this.style.backgroundColor = getRandomColor();
+                }
+
+                document.body.appendChild(square);
+            }
+
+            function getRandomColor() {
+                var letters = "0123456789ABCDEF";
+                var color = "#";
+                
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+
+                return color;
+            }
+        </script>
+    </body>
+</html>
